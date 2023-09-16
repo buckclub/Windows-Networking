@@ -1,14 +1,5 @@
 #include "Networking.h"
 
-// WinHTTP callback function to receive data
-DWORD CALLBACK HttpCallback(HINTERNET hRequest, DWORD_PTR dwContext, DWORD dwInternetStatus, LPVOID lpvStatusInformation, DWORD dwStatusInformationLength) {
-    if (dwInternetStatus == WINHTTP_CALLBACK_STATUS_READ_COMPLETE && dwStatusInformationLength > 0) {
-        std::string* buffer = reinterpret_cast<std::string*>(dwContext);
-        buffer->append(static_cast<char*>(lpvStatusInformation), dwStatusInformationLength);
-    }
-    return 0;
-}
-
 std::wstring ConvertToWString(const std::string& input) {
     int outputSize = MultiByteToWideChar(CP_UTF8, 0, input.c_str(), -1, nullptr, 0);
     std::wstring output(outputSize, L'\0');
